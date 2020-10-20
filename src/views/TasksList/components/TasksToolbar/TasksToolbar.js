@@ -11,6 +11,7 @@ FormControl,
 InputLabel
 
 } from '@material-ui/core';
+
 import { Category } from '@material-ui/icons';
 
 
@@ -40,8 +41,8 @@ const useStyles = makeStyles(theme => ({
 const TasksToolbar = props => {
   const { className, ...rest } = props;
 
-  const [description, setDescription] = useState('')
-  const [category, setCategory] = useState('')
+  const [descricao, setDescricao] = useState('')
+  const [categoria, setCategoria] = useState('')
 
 
   const classes = useStyles();
@@ -49,8 +50,12 @@ const TasksToolbar = props => {
   const submit =(e)=>{
    //just used for test to prevent that form be submited.
     e.preventDefault();
-    console.log(`Description: ${description}, Category: ${category}`)
+    const task = {
 
+      descricao: descricao,
+      categoria: categoria
+    }
+     props.save(task)
   }
 
 
@@ -72,8 +77,8 @@ const TasksToolbar = props => {
           placeholder="Description of tasks"
           label="Description:"
           fullWidth
-          value={description}
-          onChange={e => setDescription(e.target.value)}
+          value={descricao}
+          onChange={e => setDescricao(e.target.value)}
           
         />
         </Grid>
@@ -81,13 +86,13 @@ const TasksToolbar = props => {
       <FormControl fullWidth>
         <InputLabel>Category: </InputLabel>
         <Select
-          value={category}
-          onChange={e => setCategory(e.target.value)}
+          value={categoria}
+          onChange={e => setCategoria(e.target.value)}
         >
           <MenuItem value="">Select...</MenuItem>
-          <MenuItem value={"WORK"}>Work</MenuItem>
-          <MenuItem value={"STUDY"}>Study</MenuItem>
-          <MenuItem value={"OTHER"}>Other</MenuItem>
+          <MenuItem value={"TRABALHO"}>Work</MenuItem>
+          <MenuItem value={"ESTUDOS"}>Study</MenuItem>
+          <MenuItem value={"OUTROS"}>Other</MenuItem>
           
         </Select>
       </FormControl>
