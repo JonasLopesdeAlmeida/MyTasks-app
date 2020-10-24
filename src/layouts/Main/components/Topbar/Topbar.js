@@ -48,7 +48,7 @@ const Topbar = props => {
           color="inherit"
           >
             <DoneAllIcon />
-            My Tasks
+            MyTasks
           </IconButton>
 {/*       
         </RouterLink> */}
