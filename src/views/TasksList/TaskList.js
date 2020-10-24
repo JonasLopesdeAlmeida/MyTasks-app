@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { list, save, deleteTask, updatedTask} from '../../store/tasksReducer'
+import { closeMesage} from '../../store/mesageReducer'
 
 
 import { TasksToolbar, TasksTable } from './components';
@@ -15,9 +16,6 @@ DialogContent,
 Button
 } from '@material-ui/core';
 
-import axios from 'axios'
-
-
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3)
@@ -27,14 +25,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const URL_API = 'https://minhastarefas-api.herokuapp.com/tarefas'
+// const URL_API = 'https://minhastarefas-api.herokuapp.com/tarefas'
 
 const TaskList = (props) => {
   const classes = useStyles();
 
   // const [tasks, setTasks] = useState([]);
-  const [opendialog, setOpenDialog] = useState(false);
-  const [mesage, setMesage] = useState('');
+  // const [opendialog, setOpenDialog] = useState(false);
+  // const [mesage, setMesage] = useState('');
 
   //method that going to listen and submit task to the server
 //  const save = (task) =>{
@@ -113,13 +111,13 @@ const TaskList = (props) => {
       <div className={classes.content}>
         <TasksTable updatedTask={props.updatedTask} deleteTask={props.deleteTask} tasks={props.tasks} />
       </div>
-      <Dialog open={opendialog} onClose={e => setOpenDialog(false)}> 
+      <Dialog open={props.opendialog} onClose={props.closeMesage}> 
       <DialogTitle color="error">Attention</DialogTitle>
       <DialogContent>
         {props.mesage}
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={e => setOpenDialog(false)}>Close</Button>
+        <Button color="primary" onClick={props.closeMesage}>Close</Button>
       </DialogActions>
       </Dialog>
     </div>
@@ -129,11 +127,13 @@ const TaskList = (props) => {
 
  const mapStateToProps = state => ({
  
-    tasks: state.tasks.tasks
+    tasks: state.tasks.tasks,
+    mesage: state.mesages.mesage,
+    opendialog: state.mesages.openMesage
 
  })
 
  const mapDispatchToProps = dispatch => 
- bindActionCreators({list, save, deleteTask, updatedTask}, dispatch)
+ bindActionCreators({list, save, deleteTask, updatedTask, closeMesage}, dispatch)
 
 export default connect(mapStateToProps,mapDispatchToProps )(TaskList);
