@@ -79,7 +79,7 @@ const TasksTable = props => {
                        <TableCell>{task.categoria}</TableCell>
                        <TableCell>{task.done ? 'Done': 'Pending' }</TableCell>
                        <TableCell>
-                         <IconButton onClick={e => props.changeState(task.id)} >
+                         <IconButton onClick={e => props.updatedTask(task.id)} >
 
                            {
                            task.done ?(
