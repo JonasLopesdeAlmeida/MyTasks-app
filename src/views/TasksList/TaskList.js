@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
+import { bindActionCreators } from 'redux'
+import { connect  } from 'react-redux'
+import { list } from '../../store/tasksReducer'
+
+
 import { TasksToolbar, TasksTable } from './components';
 import {
 Dialog,
@@ -22,13 +27,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const URL_API = 'https://minhastarefas-api.herokuapp.com/tarefas'
 
-const TaskList = () => {
-
- const URL_API = 'https://minhastarefas-api.herokuapp.com/tarefas'
-
-
-
+const TaskList = (props) => {
   const classes = useStyles();
 
   const [tasks, setTasks] = useState([]);
@@ -66,20 +67,20 @@ axios.delete(`${URL_API}/${id}`, {
   })
  }
 
- const ListTasks = () => {
+//  const ListTasks = () => {
 
-   axios.get(URL_API, {
-    headers : {'x-tenant-id' : localStorage.getItem('email_usuario_logado')}
-   }).then(response =>{
-    const listOftasks = response.data
-    console.log(listOftasks)
-    setTasks(listOftasks)
-   }).catch(error =>{
-    setMesage('Something get wrong!')
-    setOpenDialog(true)
-   })
+//    axios.get(URL_API, {
+//     headers : {'x-tenant-id' : localStorage.getItem('email_usuario_logado')}
+//    }).then(response =>{
+//     const listOftasks = response.data
+//     console.log(listOftasks)
+//     setTasks(listOftasks)
+//    }).catch(error =>{
+//     setMesage('Something get wrong!')
+//     setOpenDialog(true)
+//    })
 
- }
+//  }
 
 const changeState = (id) =>{
   axios.patch(`${URL_API}/${id}`, null, {
@@ -101,7 +102,7 @@ const changeState = (id) =>{
 
 
   useEffect(()=>{
-    ListTasks();
+    props.list()
   },[])
        
  
@@ -110,7 +111,7 @@ const changeState = (id) =>{
     <div className={classes.root}>
       <TasksToolbar save={save}/>
       <div className={classes.content}>
-        <TasksTable changeState={changeState} deleteTask={deleteTask}tasks={tasks} />
+        <TasksTable changeState={changeState} deleteTask={deleteTask}tasks={props.tasks} />
       </div>
       <Dialog open={opendialog} onClose={e => setOpenDialog(false)}> 
       <DialogTitle color="error">Attention</DialogTitle>
@@ -126,4 +127,13 @@ const changeState = (id) =>{
   );
 };
 
-export default TaskList;
+ const mapStateToProps = state => ({
+ 
+    tasks: state.tasks.tasks
+
+ })
+
+ const mapDispatchToProps = dispatch => 
+ bindActionCreators({list}, dispatch)
+
+export default connect(mapStateToProps,mapDispatchToProps )(TaskList);
