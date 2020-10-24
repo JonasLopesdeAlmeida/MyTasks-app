@@ -56,10 +56,14 @@ const TasksToolbar = props => {
       categoria: categoria
     }
      props.save(task)
+     //cleaning field after submit informations
+     setDescricao('')
+     setCategoria('')
   }
 
 
   return (
+    
     <div
       {...rest}
       className={clsx(classes.root, className)}
@@ -72,39 +76,46 @@ const TasksToolbar = props => {
     <Grid container>
       <Grid item md={4}>
 
+
         <TextField
-          className={classes.searchInput}
+           className={classes.textField}
           placeholder="Description of tasks"
           label="Description:"
           fullWidth
           value={descricao}
-          onChange={e => setDescricao(e.target.value)}
+          variant="outlined"
+          onChange={e => setDescricao(e.target.value)}/>
           
-        />
         </Grid>
-        <Grid item md={4}>
-      <FormControl fullWidth>
-        <InputLabel>Category: </InputLabel>
-        <Select
+        
+        <Grid item md={2} >
+      {/* <FormControl fullWidth
+  
+      className={classes.textField}
+      variant="outlined"> */}
+        {/* <InputLabel >Category:</InputLabel> */}
+        <TextField
+          fullWidth
+          variant="outlined"
+          label="Category:"
+          select
           value={categoria}
-          onChange={e => setCategoria(e.target.value)}
-        >
+          onChange={e => setCategoria(e.target.value)}>
           <MenuItem value="">Select...</MenuItem>
           <MenuItem value={"TRABALHO"}>Work</MenuItem>
           <MenuItem value={"ESTUDOS"}>Study</MenuItem>
           <MenuItem value={"OUTROS"}>Other</MenuItem>
-          
-        </Select>
-      </FormControl>
+        </TextField>
+      {/* </FormControl> */}
          </Grid>
-        
-         <Grid item md={4}>
+         </Grid>
+         
          <Button onClick={submit} variant="contained"
          color="secondary">
            Save
            </Button>
-         </Grid>
-     </Grid>
+           
+         
       </div>
     </div>
   );

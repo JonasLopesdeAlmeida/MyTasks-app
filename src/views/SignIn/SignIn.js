@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundImage: 'url(/images/auth.jpg)',
+    backgroundImage: 'url(/images/tasks.png)',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center'
@@ -129,54 +129,56 @@ const SignIn = props => {
   const { history } = props;
 
   const classes = useStyles();
+  const [email, setEmail] = useState('');
 
-  const [formState, setFormState] = useState({
-    isValid: false,
-    values: {},
-    touched: {},
-    errors: {}
-  });
+  // const [formState, setFormState] = useState({
+  //   isValid: false,
+  //   values: {},
+  //   touched: {},
+  //   errors: {}
+  // });
 
-  useEffect(() => {
-    const errors = validate(formState.values, schema);
+  // useEffect(() => {
+  //   const errors = validate(formState.values, schema);
 
-    setFormState(formState => ({
-      ...formState,
-      isValid: errors ? false : true,
-      errors: errors || {}
-    }));
-  }, [formState.values]);
+  //   setFormState(formState => ({
+  //     ...formState,
+  //     isValid: errors ? false : true,
+  //     errors: errors || {}
+  //   }));
+  // }, [formState.values]);
 
-  const handleBack = () => {
-    history.goBack();
-  };
+  // const handleBack = () => {
+  //   history.goBack();
+  // };
 
-  const handleChange = event => {
-    event.persist();
+  // const handleChange = event => {
+  //   event.persist();
 
-    setFormState(formState => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        [event.target.name]:
-          event.target.type === 'checkbox'
-            ? event.target.checked
-            : event.target.value
-      },
-      touched: {
-        ...formState.touched,
-        [event.target.name]: true
-      }
-    }));
-  };
+  //   setFormState(formState => ({
+  //     ...formState,
+  //     values: {
+  //       ...formState.values,
+  //       [event.target.name]:
+  //         event.target.type === 'checkbox'
+  //           ? event.target.checked
+  //           : event.target.value
+  //     },
+  //     touched: {
+  //       ...formState.touched,
+  //       [event.target.name]: true
+  //     }
+  //   }));
+  // };
 
   const handleSignIn = event => {
     event.preventDefault();
+    localStorage.setItem('email_usuario_logado', email)
     history.push('/');
   };
 
-  const hasError = field =>
-    formState.touched[field] && formState.errors[field] ? true : false;
+  // const hasError = field =>
+  //   formState.touched[field] && formState.errors[field] ? true : false;
 
   return (
     <div className={classes.root}>
@@ -191,15 +193,15 @@ const SignIn = props => {
         >
           <div className={classes.quote}>
             <div className={classes.quoteInner}>
-              <Typography
+              {/* <Typography
                 className={classes.quoteText}
                 variant="h1"
               >
                 Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
                 they sold out High Life.
-              </Typography>
+              </Typography> */}
               <div className={classes.person}>
-                <Typography
+                {/* <Typography
                   className={classes.name}
                   variant="body1"
                 >
@@ -210,7 +212,7 @@ const SignIn = props => {
                   variant="body2"
                 >
                   Manager at inVision
-                </Typography>
+                </Typography> */}
               </div>
             </div>
           </div>
@@ -223,9 +225,9 @@ const SignIn = props => {
         >
           <div className={classes.content}>
             <div className={classes.contentHeader}>
-              <IconButton onClick={handleBack}>
+              {/* <IconButton onClick={handleBack}>
                 <ArrowBackIcon />
-              </IconButton>
+              </IconButton> */}
             </div>
             <div className={classes.contentBody}>
               <form
@@ -238,7 +240,7 @@ const SignIn = props => {
                 >
                   Sign in
                 </Typography>
-                <Typography
+                {/* <Typography
                   color="textSecondary"
                   gutterBottom
                 >
@@ -270,30 +272,30 @@ const SignIn = props => {
                       Login with Google
                     </Button>
                   </Grid>
-                </Grid>
-                <Typography
+                </Grid> */}
+                {/* <Typography
                   align="center"
                   className={classes.sugestion}
                   color="textSecondary"
                   variant="body1"
                 >
                   or login with email address
-                </Typography>
+                </Typography> */}
                 <TextField
                   className={classes.textField}
-                  error={hasError('email')}
+                  // error={hasError('email')}
                   fullWidth
-                  helperText={
-                    hasError('email') ? formState.errors.email[0] : null
-                  }
+                  // helperText={
+                  //   hasError('email') ? formState.errors.email[0] : null
+                  // }
                   label="Email address"
                   name="email"
-                  onChange={handleChange}
-                  type="text"
-                  value={formState.values.email || ''}
+                  onChange={e => setEmail(e.target.value)}
+                  type="email"
+                  value={email}
                   variant="outlined"
                 />
-                <TextField
+                {/* <TextField
                   className={classes.textField}
                   error={hasError('password')}
                   fullWidth
@@ -306,11 +308,11 @@ const SignIn = props => {
                   type="password"
                   value={formState.values.password || ''}
                   variant="outlined"
-                />
+                /> */}
                 <Button
                   className={classes.signInButton}
                   color="primary"
-                  disabled={!formState.isValid}
+                  // disabled={!formState.isValid}
                   fullWidth
                   size="large"
                   type="submit"
@@ -318,7 +320,7 @@ const SignIn = props => {
                 >
                   Sign in now
                 </Button>
-                <Typography
+                {/* <Typography
                   color="textSecondary"
                   variant="body1"
                 >
@@ -330,7 +332,7 @@ const SignIn = props => {
                   >
                     Sign up
                   </Link>
-                </Typography>
+                </Typography> */}
               </form>
             </div>
           </div>

@@ -23,13 +23,14 @@ const useStyles = makeStyles(theme => ({
 
 const Profile = props => {
   const { className, ...rest } = props;
-
+ 
   const classes = useStyles();
 
   const user = {
-    name: 'Shen Zhi',
-    avatar: '/images/avatars/avatar_11.png',
-    bio: 'Brain Director'
+    name: localStorage.getItem('email_usuario_logado'),
+    avatar: '/images/avatars/jonas.jpg',
+    bio: 'Developer'
+    
   };
 
   return (

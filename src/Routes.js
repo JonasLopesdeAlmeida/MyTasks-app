@@ -20,10 +20,17 @@ import {
 const Routes = () => {
   return (
     <Switch>
+      
       <Redirect
         exact
         from="/"
         to="/dashboard"
+      />
+        <RouteWithLayout
+        component={SignInView}
+        exact
+        layout={MinimalLayout}
+        path="/login"
       />
       <RouteWithLayout
         component={DashboardView}
@@ -37,12 +44,7 @@ const Routes = () => {
         layout={MainLayout}
         path="/tasks"
       />
-      <RouteWithLayout
-        component={SignInView}
-        exact
-        layout={MinimalLayout}
-        path="/login"
-      />
+    
       <Redirect to="/not-found" />
     </Switch>
   );

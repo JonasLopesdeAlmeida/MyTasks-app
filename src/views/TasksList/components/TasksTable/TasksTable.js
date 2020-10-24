@@ -3,6 +3,10 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import TimerIcon from '@material-ui/icons/Timer';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -13,7 +17,8 @@ import {
   TableHead,
   TableRow,
   Typography,
-  TablePagination
+  TablePagination,
+  IconButton
 } from '@material-ui/core';
 
 
@@ -59,11 +64,46 @@ const TasksTable = props => {
                  <TableCell>Description</TableCell>
                  <TableCell>Category</TableCell>
                  <TableCell>State</TableCell>
+                 <TableCell></TableCell>
+                 <TableCell></TableCell>
                </TableRow>
              </TableHead>
 
              <TableBody>
-               
+               {
+                 tasks.map(task => {
+                   return(
+                     <TableRow>
+                       <TableCell>{task.id}</TableCell>
+                       <TableCell>{task.descricao}</TableCell>
+                       <TableCell>{task.categoria}</TableCell>
+                       <TableCell>{task.done ? 'Done': 'Pending' }</TableCell>
+                       <TableCell>
+                         <IconButton onClick={e => props.changeState(task.id)} >
+
+                           {
+                           task.done ?(
+                             <DoneAllIcon color="secondary"></DoneAllIcon>
+                           ):
+                           (
+                            <TimerIcon color="error"></TimerIcon>
+                           )
+
+                           }
+                           
+                         </IconButton>
+                       </TableCell>
+
+                       <TableCell>
+                         <IconButton onClick={e => props.deleteTask(task.id)} >
+                         <DeleteIcon color="secondary"/>
+                         </IconButton>
+                       </TableCell>
+                     </TableRow>
+                    
+                   )
+                 })
+               }
                </TableBody>
            </Table>
 
